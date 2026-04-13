@@ -3,6 +3,8 @@ import { authAPI } from '../services/api';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 
+const VITE_BASE_URL = import.meta.env.VITE_BASE_URL;
+
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
@@ -49,7 +51,7 @@ export function AuthProvider({ children }) {
   const fetchUserFromBackend = async () => {
     try {
       console.log("📡 Fetching user from backend...");
-      const response = await axios.get('http://localhost:8080/api/auth/me', {
+      const response = await axios.get(`${VITE_BASE_URL}/api/auth/me`, {
         withCredentials: true
       });
 

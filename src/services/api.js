@@ -1,10 +1,11 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8080/api';
-const AUTH_BASE_URL = 'http://localhost:8080/auth';
+const VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const VITE_AUTH_BASE_URL = import.meta.env.VITE_AUTH_BASE_URL;
+const VITE_BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const api = axios.create({
-  baseURL: API_BASE_URL,
+  baseURL: VITE_API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -22,12 +23,12 @@ api.interceptors.request.use((config) => {
 
 // Auth APIs
 export const authAPI = {
-  signup: (userData) => axios.post(`${AUTH_BASE_URL}/signup`, userData, { withCredentials: true }),
-  login: (credentials) => axios.post(`${AUTH_BASE_URL}/login`, credentials, { withCredentials: true }),
-  logout: () => axios.post(`${AUTH_BASE_URL}/logout`, {}, { withCredentials: true }),
-  getCurrentUser: () => axios.get(`${API_BASE_URL}/auth/me`, { withCredentials: true }), // ✅ ADD THIS
-  getOAuthUrl: () => 'http://localhost:8080/oauth2/authorization/google',
-  deleteAccount: () => axios.delete(`${API_BASE_URL}/auth/account`, { withCredentials: true }),
+  signup: (userData) => axios.post(`${VITE_AUTH_BASE_URL}/signup`, userData, { withCredentials: true }),
+  login: (credentials) => axios.post(`${VITE_AUTH_BASE_URL}/login`, credentials, { withCredentials: true }),
+  logout: () => axios.post(`${VITE_AUTH_BASE_URL}/logout`, {}, { withCredentials: true }),
+  getCurrentUser: () => axios.get(`${VITE_API_BASE_URL}/auth/me`, { withCredentials: true }), // ✅ ADD THIS
+  getOAuthUrl: () => `${VITE_BASE_URL}/oauth2/authorization/google`,
+  deleteAccount: () => axios.delete(`${VITE_API_BASE_URL}/auth/account`, { withCredentials: true }),
 };
 
 // Quantity APIs
